@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="finance"  isExecutable="true" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" bpmnx:globalNotification="false">
+  
+    
+   <extensionElements>
+   	  <bpmnx:starterDefinition  type="designated">
+           <bpmnx:participators> 
+               <bpmnx:participator type="U" id="u01" name="小明" isParent="false" />
+               <bpmnx:participator type="R" id="r01" name="部门经理" isParent="false" />
+           </bpmnx:participators>
+      </bpmnx:starterDefinition>
+      
+      <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/>
+          </bpmnx:consignDefinition>
+       </bpmnx:authorityDefinition>
+     
+      
+   </extensionElements>
+  
+  
+  
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="A" name="ATask" activiti:exclusive="false"  bpmnx:isAutoComplete="false">
+       
+       <bpmnx:multiInstanceLoopCharacteristics isSequential="false" multiInstanceMode="operatormode">
+         <bpmnx:completionCondition>${act_countersignature_rateOfPassing>0.2}</bpmnx:completionCondition>
+      </bpmnx:multiInstanceLoopCharacteristics>
+       
+      <extensionElements>
+        <bpmnx:participatorDefinition  participatorType="candidate">
+          <bpmnx:candidate participatorSource="DEFAULT">
+          	<bpmnx:participators>
+                <bpmnx:participator type="P" id="p03" name="研发" isParent="false" parentId=""/>
+              </bpmnx:participators>
+          </bpmnx:candidate>
+        </bpmnx:participatorDefinition>
+        
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/>
+          </bpmnx:consignDefinition>
+       </bpmnx:authorityDefinition>
+        
+        
+      </extensionElements>
+    </userTask>
+    
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="A"></sequenceFlow>
+    
+    <userTask id="B" name="BTask">
+    	
+    	 <bpmnx:multiInstanceLoopCharacteristics isSequential="false" multiInstanceMode="operatormode">
+         <bpmnx:completionCondition>${act_countersignature_rateOfPassing>0.5}</bpmnx:completionCondition>
+      </bpmnx:multiInstanceLoopCharacteristics>
+    	
+       <extensionElements>
+        <bpmnx:participatorDefinition  participatorType="candidate">
+          <bpmnx:candidate participatorSource="DEFAULT">
+          	<bpmnx:participators>
+                <bpmnx:participator type="U" id="u02" name="小雨" isParent="false" />
+                 <bpmnx:participator type="R" id="r01" name="部门经理" isParent="false" />
+                 <bpmnx:participator type="R" id="r02" name="助理" isParent="false" />
+              </bpmnx:participators>
+          </bpmnx:candidate>
+        </bpmnx:participatorDefinition>
+      </extensionElements>
+      
+      
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="A" targetRef="B"></sequenceFlow>
+    <userTask id="C" name="CTask">
+      <extensionElements>
+        <bpmnx:participatorDefinition  participatorType="assignee">
+          <bpmnx:assignee participatorSource="DEFAULT">
+          	<bpmnx:participators>
+                <bpmnx:participator type="U" id="r01" name="小明" isParent="false" />
+            </bpmnx:participators>
+          </bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow3" sourceRef="B" targetRef="C"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow4" sourceRef="C" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_finance">
+    <bpmndi:BPMNPlane bpmnElement="finance" id="BPMNPlane_finance">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="220.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A" id="BPMNShape_A">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="B" id="BPMNShape_B">
+        <omgdc:Bounds height="55.0" width="105.0" x="440.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="C" id="BPMNShape_C">
+        <omgdc:Bounds height="55.0" width="105.0" x="600.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="750.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="255.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="405.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="440.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="545.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="705.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

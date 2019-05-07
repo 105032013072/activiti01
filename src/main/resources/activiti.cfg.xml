@@ -1,0 +1,138 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<!-- 
+		ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+		//连接数据库的配置
+		processEngineConfiguration.setJdbcDriver("com.mysql.jdbc.Driver");
+		processEngineConfiguration.setJdbcUrl("jdbc:mysql://localhost:3306/itcast0711activiti?useUnicode=true&characterEncoding=utf8");
+		processEngineConfiguration.setJdbcUsername("root");
+		processEngineConfiguration.setJdbcPassword("root");
+		
+		/**
+		 	public static final String DB_SCHEMA_UPDATE_FALSE = "false";不能自动创建表，需要表存在
+  			public static final String DB_SCHEMA_UPDATE_CREATE_DROP = "create-drop";先删除表再创建表
+  			public static final String DB_SCHEMA_UPDATE_TRUE = "true";如果表不存在，自动创建表
+		 */
+		processEngineConfiguration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+	 -->
+	
+	<bean id="SpiConfiguration" class="org.activiti.engine.spi.SpiConfiguration">
+           <property name="omService">
+             <!-- <bean class="com.bosssoft.install.activiti.DefaultOMServiceImpl"/>-->
+             <bean class="com.bosssoft.install.activiti.MockOMServiceImpl"/>
+           </property>
+      </bean>
+      
+     <bean id="optimizationConfiguration" class="org.activiti.engine.impl.cfg.OptimizationConfiguration">
+     	<property name="internalListenerSetting">
+	    	<map>
+	    		<entry key="ACT_INSERT_LISTENER" value="false"/>
+	    		<entry key="PROCESS_LIMIT_LISTENER" value="true"/>
+	    		<entry key="REMOVE_HISTASK_LISTENER" value="true"/>
+	    		<entry key="AUTO_COMPLETE_LISTENER" value="true"/>
+	    		<entry key="TASK_ARRIVE_LISTENER" value="true"/>
+	    		<entry key="TASK_LIMIT_LISTENER" value="true"/>
+	    		<entry key="TASK_CONSIGN_LISTENER" value="true"/>
+	    	</map>
+	    </property>
+	    
+	    <property name="processDefinitionInit" value="true"/>
+	    <property name="processDefinitionInitMaxNum" value="10"/>
+     </bean>
+     
+     <bean id="zookeeperConfiguration" class="org.activiti.engine.impl.cluster.zookeeper.ZookeeperConfiguration">
+     	 <property name="address" value="N/A"/>
+     </bean>
+     
+     
+    <!--   <bean id="cacheManager" class="org.activiti.engine.cache.RedisCacheManager">
+          <property name="redisHost" value="127.0.0.1"/>
+          <property name="redisPort" value="6379"/>
+      </bean>-->
+      
+      
+      <!--zookeeper 连接信息-->
+      <!--<bean id="zookeeperConfiguration" class="org.activiti.engine.cfg.ZookeeperConfiguration">
+         <property name="address" value="127.0.0.1"/>
+      </bean>-->
+      
+      <bean id="customParticipatorService" class="com.bosssoft.install.activiti.CustomParticipatorService"/>
+      
+	<bean id="conditionJudgement" class="org.activiti.engine.impl.bpmn.helper.ConditionJudgement"></bean>
+	
+	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+		<!-- 连接数据的配置 -->
+	    <property name="jdbcDriver" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/activiti?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="jdbcUsername" value="root"></property>
+		<property name="jdbcPassword" value="root"></property>
+		<property name="databaseSchema" value="BPMNX"></property>
+		<!--<property name="jobWaitTimeInMillis" value="5000"></property>-->
+		
+		<!--oracle-->
+   <!--  <property name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.10.57:1521/orcl"></property>
+		<property name="jdbcUsername" value="bpmnx"></property>
+		<property name="jdbcPassword" value="bs"></property>
+		<property name="databaseSchema" value="BPMNX"></property>--><!--oracle 需要配置该属性-->
+		
+    <!--  <property name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@172.18.174.80:1521/orcl"></property>
+		<property name="jdbcUsername" value="bpmnx"></property>
+		<property name="jdbcPassword" value="bs"></property>
+		<property name="databaseSchema" value="BPMNX"></property>-->
+		
+		
+		<!--postgresql-->
+		<!--<property name="jdbcDriver" value="org.postgresql.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:postgresql://117.78.43.57:25308/testnewdb1?"></property>
+		<property name="jdbcUsername" value="boss_develop_user"></property>
+		<property name="jdbcPassword" value="Bosssoft@2018"></property>-->
+	
+	  <property name="databaseTablePrefix" value="X"></property>
+		<!-- 没有表创建表 -->
+		<property name="databaseSchemaUpdate" value="true"></property>
+	    <property name="jobExecutorActivate" value="false" />
+	   
+	   <property name="SpiConfiguration" ref="SpiConfiguration"/>
+	   <!--回收退回的约束：unclaim或者unexecution-->
+	 <!--  <property name="parallelBackMode" value="unexecution"/>-->
+	 
+	 <!--  <property name="typedEventListeners">
+          <map>
+            <entry key="TASK_COMPLETED">
+              <list>
+                <bean class="com.bosssoft.install.activiti.listener.TaskCompleteListener" />
+              </list>
+           </entry>
+         </map>
+      </property>-->
+      
+  <!--   <property name="eventListeners">
+          <list>
+             <bean class="com.bosssoft.install.activiti.OnceDoneTaskEventListener" />
+           </list>
+      </property>-->
+	  
+	   <property name="beans">
+        	<map>
+        		<entry key="conditionJudgement" value-ref="conditionJudgement"/>
+        	</map>
+        </property>
+    
+    <!--优化配置-->
+  <!--  <property name="optimizationConfiguration" ref="optimizationConfiguration"/> -->
+      <!-- <property name="history" value="activity"></property>-->
+     <!-- <property name="history" value="none"></property>-->
+     <!--  <property name="zookeeperConfiguration" ref="zookeeperConfiguration"/>-->
+     
+     <!--zookeeper 配置-->
+    <property name="zookeeperConfiguration" ref="zookeeperConfiguration"/>
+  
+	</bean>
+
+</beans>

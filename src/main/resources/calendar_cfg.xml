@@ -1,0 +1,35 @@
+<calendar>
+   <!--需要工作的周末-->
+  <weekend-work>
+      <month value="2">
+         <day>11</day>
+         <day>24</day>
+      </month>
+      
+       <month value="2">
+         <day>11</day>
+         <day>24</day>
+      </month>
+      
+      <month value="9">
+         <day>29</day>
+         <day>30</day>
+      </month>
+  </weekend-work>
+ 
+ 
+ <!--不需要工作的工作日-->
+  <workday-weekend>
+  	<month value="1">
+         <day>1</day>
+      </month>
+      
+       <month value="2">
+         <day>15</day>
+         <day>16</day>
+         <day>19</day>
+         <day>20</day>
+         <day>21</day>
+      </month>
+  </workday-weekend>
+</calendar>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="finance" name="财政" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="A" name="ATask" activiti:assignee="AA"></userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="A"></sequenceFlow>
+    <boundaryEvent id="boundarytimer1" name="Timer" attachedToRef="A" cancelActivity="true">
+      <timerEventDefinition>
+        <timeDate>${timeOut}</timeDate>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="com.bosssoft.install.activiti.listener.ServiceListener"></serviceTask>
+    <sequenceFlow id="flow3" sourceRef="boundarytimer1" targetRef="servicetask1"></sequenceFlow>
+    <userTask id="B" name="BTask" activiti:assignee="BB"></userTask>
+    <sequenceFlow id="flow4" sourceRef="A" targetRef="B"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow5" sourceRef="B" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_finance">
+    <bpmndi:BPMNPlane bpmnElement="finance" id="BPMNPlane_finance">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="220.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A" id="BPMNShape_A">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundarytimer1" id="BPMNShape_boundarytimer1">
+        <omgdc:Bounds height="30.0" width="30.0" x="338.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="B" id="BPMNShape_B">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="610.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="255.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="353.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="352.0" y="320.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="405.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="460.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="565.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

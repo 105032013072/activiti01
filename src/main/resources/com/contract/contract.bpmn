@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://bpmn.io/schema/bpmn">
+  <process id="Process_2" name="测试流程" isExecutable="true" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" bpmnx:globalNotification="true" bpmnx:version="1">
+    <extensionElements>
+      <bpmnx:formDefinition></bpmnx:formDefinition>
+      <bpmnx:timeEffectiveDefinition></bpmnx:timeEffectiveDefinition>
+      <bpmnx:starterDefinition>
+        <bpmnx:participators></bpmnx:participators>
+      </bpmnx:starterDefinition>
+    </extensionElements>
+    <startEvent id="StartEvent_1" activiti:initiator="undefined" activiti:formKey="undefined"></startEvent>
+    <userTask id="A" name="A">
+      <extensionElements>
+        <bpmnx:participatorDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT"></bpmnx:candidate>
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" calendar="workingday" timeDuration="0.000"></bpmnx:timeEffectiveDefinition>
+        <bpmnx:formDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" formPage="" formType=""></bpmnx:formDefinition>
+        <bpmnx:authorityDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx">
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate"></bpmnx:consignType>
+            <bpmnx:consignType value="substitution"></bpmnx:consignType>
+            <bpmnx:consignType value="cooperation"></bpmnx:consignType>
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime"></bpmnx:withdrawType>
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast"></bpmnx:backType>
+            <bpmnx:backType value="backToAct"></bpmnx:backType>
+            <bpmnx:backType value="backToReapply"></bpmnx:backType>
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore"></bpmnx:insertType>
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx">
+          <bpmnx:participators></bpmnx:participators>
+        </bpmnx:carbonCopy>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_1bmv4fv" sourceRef="StartEvent_1" targetRef="A">
+      <extensionElements>
+        <activiti:executionListener event="take" class="com.bosssoft.install.activiti.listener.SequenceFlowTaskListener"></activiti:executionListener>
+      </extensionElements>
+    </sequenceFlow>
+    <userTask id="B" name="B">
+      <extensionElements>
+        <bpmnx:participatorDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT"></bpmnx:candidate>
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" calendar="workingday" timeDuration="0.000"></bpmnx:timeEffectiveDefinition>
+        <bpmnx:formDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" formPage="" formType=""></bpmnx:formDefinition>
+        <bpmnx:authorityDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx">
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate"></bpmnx:consignType>
+            <bpmnx:consignType value="substitution"></bpmnx:consignType>
+            <bpmnx:consignType value="cooperation"></bpmnx:consignType>
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime"></bpmnx:withdrawType>
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast"></bpmnx:backType>
+            <bpmnx:backType value="backToAct"></bpmnx:backType>
+            <bpmnx:backType value="backToReapply"></bpmnx:backType>
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore"></bpmnx:insertType>
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx">
+          <bpmnx:participators></bpmnx:participators>
+        </bpmnx:carbonCopy>
+      </extensionElements>
+    </userTask>
+    <endEvent id="EndEvent_0d1k1ej"></endEvent>
+    <sequenceFlow id="SequenceFlow_0fa8wmq" sourceRef="B" targetRef="EndEvent_0d1k1ej"></sequenceFlow>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="com.bosssoft.install.activiti.listener.ServiceListener"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="A" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="servicetask1" targetRef="B"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_2">
+    <bpmndi:BPMNPlane bpmnElement="Process_2" id="BPMNPlane_Process_2">
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_StartEvent_1">
+        <omgdc:Bounds height="36.0" width="36.0" x="173.0" y="102.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A" id="BPMNShape_A">
+        <omgdc:Bounds height="80.0" width="100.0" x="259.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="B" id="BPMNShape_B">
+        <omgdc:Bounds height="80.0" width="100.0" x="559.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_0d1k1ej" id="BPMNShape_EndEvent_0d1k1ej">
+        <omgdc:Bounds height="36.0" width="36.0" x="709.0" y="102.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1bmv4fv" id="BPMNEdge_SequenceFlow_1bmv4fv">
+        <omgdi:waypoint x="209.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="259.0" y="120.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0fa8wmq" id="BPMNEdge_SequenceFlow_0fa8wmq">
+        <omgdi:waypoint x="659.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="709.0" y="120.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="359.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="107.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="515.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="559.0" y="120.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

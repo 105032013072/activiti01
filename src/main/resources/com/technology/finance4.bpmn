@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="finance12" name="财政" isExecutable="true" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" bpmnx:globalNotification="false" isClosed="false" processType="None" bpmnx:version="7">
+    <extensionElements>
+    	<bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/> 
+          </bpmnx:consignDefinition>
+       </bpmnx:authorityDefinition>
+    
+    </extensionElements>
+    
+    
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="A" name="ATask" activiti:exclusive="false" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" bpmnx:isAutoComplete="false">
+      <extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:assignee participatorSource="DEFAULT">
+          	<bpmnx:participators>
+                <bpmnx:participator type="U" id="u02" name="小王" isParent="false" parentId=""/>
+             </bpmnx:participators>
+          </bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        
+        <bpmnx:authorityDefinition>
+             <!--委托-->
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/>  
+             <bpmnx:consignType value="substitution"/> 
+             <bpmnx:consignType value="cooperation"/> 
+          </bpmnx:consignDefinition>
+          
+           <!--收回   （单选）--> 
+          <bpmnx:withdrawDefinition enable="true"> 
+             <bpmnx:withdrawType value="untreated"/> 
+          </bpmnx:withdrawDefinition>
+            
+           
+          
+           <!--退回  （多选）-->
+          <bpmnx:backDefinition enable="true">
+             <bpmnx:backType value="backToLast"/> 
+             <bpmnx:backType value="backToAct"/>  
+             <bpmnx:backType value="backToReapply"/> 
+          </bpmnx:backDefinition>
+          
+            <!--加签  （单选）-->
+          <bpmnx:insertDefinition enable="true">
+             <bpmnx:insertType value="insertBefore"/>  
+             <bpmnx:insertType value="insertAfter"/>  
+             <bpmnx:insertType value="insertParallel"/> 
+          </bpmnx:insertDefinition>
+          
+       </bpmnx:authorityDefinition>
+        
+        
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="A"></sequenceFlow>
+    <userTask id="B" name="BTask">
+      <extensionElements>
+        <bpmnx:participatorDefinition  participatorType="candidate">
+          <bpmnx:candidate participatorSource="ACTMUTEX_ACT_ASSIGNEE">A</bpmnx:candidate>
+        </bpmnx:participatorDefinition>
+        
+        <bpmnx:authorityDefinition>
+             <!--委托-->
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/>  
+             <bpmnx:consignType value="substitution"/> 
+             <bpmnx:consignType value="cooperation"/> 
+          </bpmnx:consignDefinition>
+          
+           <!--收回   （单选）--> 
+          <bpmnx:withdrawDefinition enable="true"> 
+             <bpmnx:withdrawType value="untreated"/> 
+          </bpmnx:withdrawDefinition>
+            
+           
+          
+           <!--退回  （多选）-->
+          <bpmnx:backDefinition enable="true">
+             <bpmnx:backType value="backToLast"/> 
+             <bpmnx:backType value="backToAct"/>  
+             <bpmnx:backType value="backToReapply"/> 
+          </bpmnx:backDefinition>
+          
+            <!--加签  （单选）-->
+          <bpmnx:insertDefinition enable="true">
+             <bpmnx:insertType value="insertBefore"/>  
+             <bpmnx:insertType value="insertAfter"/>  
+             <bpmnx:insertType value="insertParallel"/> 
+          </bpmnx:insertDefinition>
+          
+       </bpmnx:authorityDefinition>
+        
+        
+      </extensionElements>
+    </userTask>
+    <userTask id="C" name="CTask">
+      <extensionElements>
+        <bpmnx:participatorDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" participatorType="candidate">
+          <bpmnx:candidate participatorSource="ACT_PARTICIPATOR">B</bpmnx:candidate>
+        </bpmnx:participatorDefinition>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow3" sourceRef="B" targetRef="C"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow4" sourceRef="C" targetRef="endevent1"></sequenceFlow>
+    <userTask id="B1" name="B1Task">
+      
+       <extensionElements>
+        <bpmnx:participatorDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" participatorType="candidate">
+          <bpmnx:candidate participatorSource="DEFAULTMUTEX_ACT_ASSIGNEE" excludeActAssignee="B">
+            <bpmnx:participators>
+              <bpmnx:participator id="u02" isParent="false" name="小雨" type="U"></bpmnx:participator>
+            </bpmnx:participators>
+          </bpmnx:candidate>
+        </bpmnx:participatorDefinition>
+        
+        
+        <bpmnx:authorityDefinition>
+             <!--委托-->
+          <bpmnx:consignDefinition  enable="true"> 
+             <bpmnx:consignType value="delegate"/>  
+             <bpmnx:consignType value="substitution"/> 
+            
+          </bpmnx:consignDefinition>
+          
+           <!--收回   （单选）--> 
+          <bpmnx:withdrawDefinition enable="true"> 
+             <bpmnx:withdrawType value="untreated"/> 
+          </bpmnx:withdrawDefinition>
+            
+           
+          
+           <!--退回  （多选）-->
+          <bpmnx:backDefinition enable="true">
+             <bpmnx:backType value="backToLast"/> 
+             <bpmnx:backType value="backToAct"/>  
+             <bpmnx:backType value="backToReapply"/> 
+          </bpmnx:backDefinition>
+          
+            <!--加签  （单选）-->
+          <bpmnx:insertDefinition enable="true">
+             <bpmnx:insertType value="insertBefore"/>  
+             <bpmnx:insertType value="insertAfter"/>  
+             <bpmnx:insertType value="insertParallel"/> 
+          </bpmnx:insertDefinition>
+          
+       </bpmnx:authorityDefinition>
+        
+        
+      </extensionElements>
+      
+    </userTask>
+    <sequenceFlow id="_13" sourceRef="B1" targetRef="C"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow7"></exclusiveGateway>
+    <sequenceFlow id="flow5" sourceRef="A" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow6" name="${val==10}" sourceRef="exclusivegateway1" targetRef="B1"></sequenceFlow>
+    <sequenceFlow id="flow7" name="${val==100}" sourceRef="exclusivegateway1" targetRef="B"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_finance">
+    <bpmndi:BPMNPlane bpmnElement="finance" id="BPMNPlane_finance">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="85.0" y="225.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A" id="BPMNShape_A">
+        <omgdc:Bounds height="55.0" width="105.0" x="160.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="B" id="BPMNShape_B">
+        <omgdc:Bounds height="55.0" width="105.0" x="405.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="C" id="BPMNShape_C">
+        <omgdc:Bounds height="55.0" width="105.0" x="600.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="750.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="B1" id="BPMNShape_B1">
+        <omgdc:Bounds height="55.0" width="85.0" x="405.0" y="145.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="300.0" y="217.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="120.0" y="242.0"></omgdi:waypoint>
+        <omgdi:waypoint x="160.0" y="237.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="510.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="652.0" y="275.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="705.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_13" id="BPMNEdge__13">
+        <omgdi:waypoint x="447.0" y="200.0"></omgdi:waypoint>
+        <omgdi:waypoint x="652.0" y="220.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="265.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="237.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="320.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="172.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="172.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="52.0" x="330.0" y="217.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="320.0" y="257.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="287.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="330.0" y="257.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
