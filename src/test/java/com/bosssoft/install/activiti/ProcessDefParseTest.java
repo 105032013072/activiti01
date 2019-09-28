@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import org.activiti.bpmn.model.BizExtendValue;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.FormDefinition;
 import org.activiti.bpmn.model.FormProperty;
@@ -19,26 +19,23 @@ import org.activiti.bpmn.model.TimeEffectiveDefinition;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.TaskExt;
 import org.activiti.engine.impl.authority.AuthorityItem;
-import org.activiti.engine.impl.bpmn.parser.BpmnParse;
-import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.persistence.entity.ActivityEntity;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.Model;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.runtime.RunTrail;
 import org.activiti.engine.spi.identity.IdentityEnum;
 import org.activiti.engine.spi.identity.Participator;
+import org.activiti.engine.spi.notification.ChannelType;
 import org.activiti.engine.spi.notification.NotificationType;
 import org.junit.Test;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 public class ProcessDefParseTest extends BaseTest{
@@ -79,25 +76,36 @@ public class ProcessDefParseTest extends BaseTest{
 		
 		Thread.sleep(600000000);*/
 		Map<String,Object> processVar=new HashMap<String, Object>();
-		processVar.put("key1", "key1");
-		processVar.put("key2", false);
+		processVar.put("menuguid", "111C44C5520EACC5357226874E65E8EE");
+		/*processVar.put("var2","b");
+		processVar.put("code", "b");*/
+		//processVar.put("c", "c");
 		    
 	ProcessInstance inst=	runtimeService
 				.createProcessInstanceBuilder()
 				//.processDefinitionKey("Process_1")
 				//.processDefinitionKey("Process_1")
-				.processDefinitionId("Process_1:1:70005")
+				.processDefinitionId("Process_1:1:4")
 				.businessKey("key1")
 				.processStarter("u01")
-				.addVariable("condition", processVar)
+				.setVariables(processVar)
 				.processInstanceName("测试流程-2018-12-13")
 				.start(); 
+	 System.out.println(inst.getId());  
+	 
+	 System.out.println("2123123");
+	 
 	
-		  System.out.println(inst.getId());  
-		  
-		  //test
-		  
-		 
+	 inst=	runtimeService
+				.createProcessInstanceBuilder()
+				//.processDefinitionKey("Process_1")
+				//.processDefinitionKey("Process_1")
+				.processDefinitionId("Process_1:1:4")
+				.businessKey("key1")
+				.processStarter("u01")
+				.setVariables(processVar)
+				.processInstanceName("测试流程-2018-12-13")
+				.start(); 
 		  
 		 /* BpmnParse bpmnParse=  Context.getProcessEngineConfiguration().getBpmnParser()
           .createParse()
@@ -107,15 +115,7 @@ public class ProcessDefParseTest extends BaseTest{
           .name(resourceName);*/
 		  
 		  
-		  BpmnParse bpmnParse=  Context.getProcessEngineConfiguration().getBpmnParser()
-		          .createParse()
-		         // .sourceInputStream()
-		          .setSourceSystemId("'")
-		        //  .deployment(deployment)
-		          .name("");
 		  
-		  
-		  bpmnParse.execute();
 	        
 	     
 		  
@@ -131,9 +131,15 @@ public class ProcessDefParseTest extends BaseTest{
 	@Test
 	public void getProcessFormPage() throws InterruptedException{
 		
-		ProcessDefinitionEntity	result=(ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition("Process_1:1:277527");
+		ProcessDefinitionEntity	result=(ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition("Process_1:1:425004");
 		System.out.println("分类："+result.getCategory());
 		System.out.println("name："+result.getName());
+		
+		System.out.println("biz");
+		for (BizExtendValue bizExtendValue : result.getBizExtendValues()) {
+			System.out.println(bizExtendValue.getType()+"  "+bizExtendValue.getExt1());
+		}
+		
 		
 		StringBuffer buffer=new StringBuffer();
 		FormDefinition formDefinition=result.getFormDefinition();
@@ -215,14 +221,16 @@ public class ProcessDefParseTest extends BaseTest{
 	@Test
 	public void getTaskDefinition(){
 		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
-				.getDeployedProcessDefinition("Process_1:1:50006");
+				.getDeployedProcessDefinition("Process_test:1:327504");
 		
-		ActivityImpl activityImpl=processDefinitionEntity.findActivity("A");
-		List<PvmTransition> outList=	activityImpl.getOutgoingTransitions();
+		ActivityImpl activityImpl=processDefinitionEntity.findActivity("StartEvent_1");
+		System.out.println(activityImpl.getIncomingTransitions().size());
+		System.out.println(activityImpl.getOutgoingTransitions().size());
+		/*List<PvmTransition> outList=	activityImpl.getOutgoingTransitions();
 		for (PvmTransition pvmTransition : outList) {
 			System.out.println(pvmTransition.getId());
 			System.out.println(pvmTransition.getProperty("name"));
-		}
+		}*/
         
 		//ActivityImpl activityImpl = (ActivityImpl) processDefinitionEntity.findActivity("StartEvent_1");
 		//System.out.println(activityImpl.getProperty("documentation"));
@@ -233,8 +241,13 @@ public class ProcessDefParseTest extends BaseTest{
 		
 		
 
-		TaskDefinition taskDefinition = processDefinitionEntity.getTaskDefinitions().get("D");
+		TaskDefinition taskDefinition = processDefinitionEntity.getTaskDefinitions().get("A");
 		//System.out.println("document: "+taskDefinition.getDescriptionExpression().getExpressionText());
+		
+		System.out.println("业务扩展");
+		for (BizExtendValue bizExtendValue : taskDefinition.getBizExtendValues()) {
+			System.out.println(bizExtendValue);
+		}
 		
 		
 		for (ActivityEntity activityEntity : taskDefinition.getBackActivities()) {
@@ -290,21 +303,16 @@ public class ProcessDefParseTest extends BaseTest{
 		for (String id : listeners) {
 			buffer.append(id + " ");
 		}*/
+		taskService.addComment(taskId, processInstanceId, message)
 		System.out.println(buffer);
 	}
  	
  	@Test
 	public void deleteDeployment() {
-		List<Deployment> list = processEngine.getRepositoryService().createDeploymentQuery()
-				.list();
-		for (Deployment deployment : list) {
-			System.out.println(deployment.getId());
-
-			processEngine.getRepositoryService().deleteDeploymentCascade(deployment.getId());
-		    //repositoryService.deleteDeployment(deployment.getId(), false);
+ 		List<Deployment> list=repositoryService.createDeploymentQuery().list();
+ 		for (Deployment deployment : list) {
+			repositoryService.deleteDeployment(deployment.getId(), true);
 		}
- 		
- 		/*processEngine.getRepositoryService().deleteDeployment("1130001",true);*/
 	}
  	
  	/**
@@ -312,10 +320,15 @@ public class ProcessDefParseTest extends BaseTest{
  	 */
  	@Test
  	public void deleteProcessInstance(){
- 	   runtimeService.deleteProcessInstance("542501", "delete");
- 	   histroyService.deleteHistoricProcessInstance("542501");
- 		
+ 	   runtimeService.deleteProcessInstance("17501", "delete");
+ 	   histroyService.deleteHistoricProcessInstance("17501");
+ 	   
+ 	   
+ 	   
  	}
+ 	
+ 	
+ 	
  	
  	
  	@Test
@@ -496,25 +509,39 @@ public class ProcessDefParseTest extends BaseTest{
  	
  	@Test
  	public void completeTask2(){
- 	 // System.out.println("删除前："+repositoryService.getBpmnModel("Process_1:1:287504"));
- 		/*ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
-				.getDeployedProcessDefinition("Process_1:1:750006");*/
+ 		List<TaskExt>  list=  histroyService.createHistoricTaskExtQuery()
+		           .completetaskAssignee("user0")
+		           .normalOperation()
+		          // .businessKey("key1")
+		           .taskDefinitionKey("A")
+		           .list();
+ 	    for (TaskExt taskExt : list) {
+			System.out.println(taskExt.getTaskId());
+		}
  		
- 		 /*((RepositoryServiceImpl) repositoryService)
-				.getDeployedProcessDefinition("Process_1:1:750006");*/
+ 		
 
  		
- 		/*ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
-				.getDeployedProcessDefinition("Process_1:1:897510");*/
+ 	}
+ 	
+ 	
+ 	@Test
+ 	public void searchHisTask(){
+ 		//runtimeService.suspendProcessInstanceById("1905001");
+ 		//runtimeService.activateProcessInstanceById("1905001");
+ 		//runtimeService.terminateProcess("1905001")
  		
- 		//runtimeService.deleteProcessInstance("932501", "delete");
+ 		runtimeService.createProcessInstanceQuery().or().active().termination().endOr().list();
+ 	}
+ 	
+ 	@Test
+ 	public void cacheTest(){
+ 		List<HistoricProcessInstance> his=
+
+  histroyService.createHistoricProcessInstanceQuery().or().active().termination().endOr().list();
+ 		for (HistoricProcessInstance historicProcessInstance : his) {
+			System.out.println(historicProcessInstance.getId());
+		}
  		
- 		//runtimeService.terminateProcess("40001");
- 		
- 		//获取嵌套子流程中的元素
- 		ProcessDefinitionEntity	result=(ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition("Process_sub:1:85010");
- 		ActivityImpl activityImpl=result.findActivity("1");
- 		System.out.println(result);
- 		System.out.println(activityImpl.getParentActivity());
  	}
 }

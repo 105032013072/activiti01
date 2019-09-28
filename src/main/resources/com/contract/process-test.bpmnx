@@ -7,6 +7,20 @@
       <bpmnx:starterDefinition type="arbitrary">
         <bpmnx:participators />
       </bpmnx:starterDefinition>
+      
+      <bpmnx:bizExtDefinition>
+        <bpmnx:bizExtType type="processExtend_1" description="流程扩展信息">
+           <bpmnx:bizExtValue ext1="procestest1" ext2="Atest2" ext3="Atest3" />
+           <bpmnx:bizExtValue ext1="procestest11" ext2="Atest22" ext3="Atest33" />
+        </bpmnx:bizExtType>
+        
+         <bpmnx:bizExtType type="processExtend_2" description="流程扩展信息">
+           <bpmnx:bizExtValue ext1="procestest2" ext2="Atest2" ext3="Atest3" />
+           <bpmnx:bizExtValue ext1="procestest22" ext2="Atest22" ext3="Atest33" />
+        </bpmnx:bizExtType>
+      </bpmnx:bizExtDefinition>
+      
+      
     </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1" name="" activiti:formKey="undefined" activiti:initiator="undefined">
       <bpmn:extensionElements />
@@ -14,6 +28,16 @@
     </bpmn:startEvent>
     <bpmn:userTask id="A" name="A">
       <bpmn:extensionElements>
+      
+        <bpmnx:bizExtDefinition>
+ 
+        <bpmnx:bizExtType type="Atest" description="节点挂载的业务菜单">
+           <bpmnx:bizExtValue ext1="Atest1" ext2="Atest2" ext3="Atest3" />
+           <bpmnx:bizExtValue ext1="Atest11" ext2="Atest22" ext3="Atest33" />
+       </bpmnx:bizExtType>
+       
+     </bpmnx:bizExtDefinition>
+   
       
        <bpmnx:backActivities>
           <bpmnx:backActivity id="B" name="B_name"/>
@@ -63,6 +87,18 @@
     </bpmn:parallelGateway>
     <bpmn:userTask id="B" name="B">
       <bpmn:extensionElements>
+      
+        <bpmnx:bizExtDefinition>
+        <bpmnx:bizExtType type="menu" description="节点挂载的业务菜单">
+           <bpmnx:bizExtValue ext1="value1" ext2="value2" ext3="value3" />
+           <bpmnx:bizExtValue ext1="value11" ext2="value22" ext3="value33" />
+       </bpmnx:bizExtType>
+       <bpmnx:bizExtType type="tableInfo" description="扩展数据类型的描述">
+           <bpmnx:bizExtValue ext1="填入的值1" ext2="填入的值2" ext3="填入的值3" ext4="填入的值4" ext5="填入的值5" ext6="填入的值6"/>
+           <bpmnx:bizExtValue ext1="填入的值11" ext2="填入的值22" ext3="填入的值33" ext4="填入的值44" ext5="填入的值55" ext6="填入的值66"/>
+       </bpmnx:bizExtType>
+     </bpmnx:bizExtDefinition>
+      
         <bpmnx:participatorDefinition participatorType="assignee">
           <bpmnx:candidate participatorSource="DEFAULT" />
           <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>

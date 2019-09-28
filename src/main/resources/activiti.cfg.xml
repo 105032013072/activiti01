@@ -25,6 +25,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
              <!-- <bean class="com.bosssoft.install.activiti.DefaultOMServiceImpl"/>-->
              <bean class="com.bosssoft.install.activiti.MockOMServiceImpl"/>
            </property>
+           
+           <property name="notificationListeners">
+              <list>
+              	<bean class="com.bosssoft.install.activiti.OvertimeForTask"/>
+              </list>
+           </property>
       </bean>
       
      <bean id="optimizationConfiguration" class="org.activiti.engine.impl.cfg.OptimizationConfiguration">
@@ -44,10 +50,34 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	    <property name="processDefinitionInitMaxNum" value="10"/>
      </bean>
      
-     <bean id="zookeeperConfiguration" class="org.activiti.engine.impl.cluster.zookeeper.ZookeeperConfiguration">
+   <!--   <bean id="activitiCacheConfiguration" class="org.activiti.engine.impl.cfg.ActivitiCacheConfiguration">
+     	 <property name="activitiCache">
+     	 	 <bean class="org.activiti.engine.impl.cache.RedisCache">
+     	 	    <property name="redisHost" value="127.0.0.1:6379"/>
+     	 	 </bean>
+     	 </property>
+     	 
+     	 <property name="zookeeperConfiguration">
+     	 	 <bean class="org.activiti.engine.impl.cluster.zookeeper.ZookeeperConfiguration">
+     	 	    <property name="address" value="N/A"/>
+     	 	 </bean>
+     	 </property>
+     </bean>-->
+     
+     <bean id="reverseConfiguration" class="org.activiti.engine.impl.cfg.ReverseConfiguration">
+	    <property name="parallelBackMode" value="unexecution"/>
+	    <property name="preserveBackHisTask" value="false"/>
+	    <property name="preserveBackSourceHisTask" value="true"/>
+	    <property name="preserveWithdrawHisTask" value="false"/>
+     </bean>
+     
+  <!--   <bean id="zookeeperConfiguration" class="org.activiti.engine.impl.cluster.zookeeper.ZookeeperConfiguration">
      	 <property name="address" value="N/A"/>
      </bean>
      
+     <bean id="redisActivitiCache" class="org.activiti.engine.impl.cache.RedisCache">
+     	 <property name="redisHost" value="127.0.0.1:6379"/>
+     </bean>-->
      
     <!--   <bean id="cacheManager" class="org.activiti.engine.cache.RedisCacheManager">
           <property name="redisHost" value="127.0.0.1"/>
@@ -67,14 +97,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
 		<!-- 连接数据的配置 -->
 	    <property name="jdbcDriver" value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/activiti?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/activiti_cache_test?useUnicode=true&amp;characterEncoding=utf8"></property>
 		<property name="jdbcUsername" value="root"></property>
 		<property name="jdbcPassword" value="root"></property>
-		<property name="databaseSchema" value="BPMNX"></property>
+		<property name="databaseSchema" value="BPMNX"></property> 
 		<!--<property name="jobWaitTimeInMillis" value="5000"></property>-->
 		
 		<!--oracle-->
-   <!--  <property name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"></property>
+    <!-- <property name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.10.57:1521/orcl"></property>
 		<property name="jdbcUsername" value="bpmnx"></property>
 		<property name="jdbcPassword" value="bs"></property>
@@ -93,12 +123,19 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="jdbcUsername" value="boss_develop_user"></property>
 		<property name="jdbcPassword" value="Bosssoft@2018"></property>-->
 	
+	 
+	<!--
+		<property name="jdbcUrl" value=" jdbc:dm://192.168.10.62:5236/SYSDBA"></property>
+		<property name="jdbcUsername" value="SYSDBA"></property>
+		<property name="jdbcPassword" value="SYSDBA"></property>
+		<property name="databaseSchema" value="BPMN"></property>-->
+	
 	  <property name="databaseTablePrefix" value="X"></property>
 		<!-- 没有表创建表 -->
 		<property name="databaseSchemaUpdate" value="true"></property>
-	    <property name="jobExecutorActivate" value="false" />
+	    <property name="jobExecutorActivate" value="true" />
 	   
-	   <property name="SpiConfiguration" ref="SpiConfiguration"/>
+	   <property name="spiConfiguration" ref="SpiConfiguration"/>
 	   <!--回收退回的约束：unclaim或者unexecution-->
 	 <!--  <property name="parallelBackMode" value="unexecution"/>-->
 	 
@@ -112,7 +149,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
          </map>
       </property>-->
       
-  <!--   <property name="eventListeners">
+   <!--  <property name="eventListeners">
           <list>
              <bean class="com.bosssoft.install.activiti.OnceDoneTaskEventListener" />
            </list>
@@ -130,8 +167,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
      <!-- <property name="history" value="none"></property>-->
      <!--  <property name="zookeeperConfiguration" ref="zookeeperConfiguration"/>-->
      
-     <!--zookeeper 配置-->
-    <property name="zookeeperConfiguration" ref="zookeeperConfiguration"/>
+     <!--  <property name="activitiCacheConfiguration" ref="activitiCacheConfiguration"/>-->
+    
   
 	</bean>
 

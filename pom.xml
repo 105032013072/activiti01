@@ -13,11 +13,108 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <!-- <activiti-version>5.22.0</activiti-version>-->
-    <activiti-version>5.23.9-SNAPSHOT</activiti-version>
+    <activiti-version>5.23.12-SNAPSHOT</activiti-version>
    <slf4j.version>1.7.21</slf4j.version>
   </properties>
 
    <dependencies>
+   
+
+<!-- <dependency>
+<groupId>org.javassist</groupId>
+<artifactId>javassist</artifactId>
+<version>3.20.0-GA</version>
+</dependency>
+<dependency>
+<groupId>link.jfire</groupId>
+<artifactId>jfire-baseutil</artifactId>
+<version>1.0.3</version>
+</dependency> -->
+   
+    <dependency>
+<groupId>com.fasterxml.uuid</groupId>
+<artifactId>java-uuid-generator</artifactId>
+<version>3.1.4</version>
+</dependency>
+   
+   <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        
+        
+    <dependency>
+     <groupId>net.sourceforge.groboutils</groupId>
+     <artifactId>groboutils-core</artifactId>
+     <version>5</version>
+     <scope>test</scope>
+ </dependency>
+        
+   <!--      <dependency>
+  <groupId>de.ruedigermoeller</groupId>
+  <artifactId>fst</artifactId>
+  <version>2.04</version>
+</dependency> -->
+
+<dependency>
+  <groupId>com.bosssoft.platform.microservice</groupId>
+  <artifactId>microservice-common-fse</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+
+<dependency>
+    <groupId>de.ruedigermoeller</groupId>
+    <artifactId>fst</artifactId>
+    <version>2.48-jdk-6</version>
+</dependency>
+        
+         <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.0.27</version>
+            </dependency>
+        
+    	<dependency>
+				<groupId>com.dameng</groupId>
+				<artifactId>Dm7JdbcDriver17</artifactId>
+				<version>7.6.0.77</version>
+			</dependency>    
+     
+        
+      <!-- <dependency>
+        <groupId>io.protostuff</groupId>
+        <artifactId>protostuff-core</artifactId>
+        <version>1.5.9</version>
+    </dependency>
+    <dependency>
+        <groupId>io.protostuff</groupId>
+        <artifactId>protostuff-runtime</artifactId>
+        <version>1.5.9</version>
+    </dependency>
+    <dependency>
+        <groupId>io.protostuff</groupId>
+        <artifactId>protostuff-api</artifactId>
+        <version>1.5.9</version>
+    </dependency> -->
+    
+     <dependency> 
+     <groupId>com.dyuproject.protostuff</groupId> 
+     <artifactId>protostuff-core</artifactId> 
+     <version>1.0.8</version> 
+ </dependency> 
+ <dependency> 
+     <groupId>com.dyuproject.protostuff</groupId> 
+     <artifactId>protostuff-runtime</artifactId> 
+     <version>1.0.8</version> 
+ </dependency> 
+ <!-- Objenesis -->
+ <dependency>
+     <groupId>org.objenesis</groupId>
+     <artifactId>objenesis</artifactId>
+     <version>2.1</version>
+ </dependency>
+
    <dependency>
       <groupId>com.bosssoft.platform</groupId>
       <artifactId>activitix-engine</artifactId>
@@ -97,7 +194,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.7</version>
     </dependency>
     <dependency>
 			<groupId>mysql</groupId>

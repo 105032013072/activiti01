@@ -130,4 +130,16 @@ public class MockOMServiceImpl implements OMService {
 		return list;
 	}
 
+	@Override
+	public Participator getOrganizationByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Participator> getAuthorityOrganizationTree(String orgCode, boolean root) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

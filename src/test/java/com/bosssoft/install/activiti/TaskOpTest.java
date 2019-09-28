@@ -1,82 +1,38 @@
 package com.bosssoft.install.activiti;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ServiceLoader;
-import java.util.Set;
 
-import org.activiti.bpmn.model.Activity;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.consign.ConsignInstState;
-import org.activiti.engine.consign.ConsignInstType;
 import org.activiti.engine.consign.ConsignTask;
-import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricConsignTaskQuery;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskExtQuery;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.impl.BizExtendServiceImpl;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.TaskDetail;
 import org.activiti.engine.impl.TaskExt;
-import org.activiti.engine.impl.authority.AuthorityManager;
-import org.activiti.engine.impl.bpmn.helper.ConsignInstLinkHelper;
-import org.activiti.engine.impl.bpmn.helper.ConsignRankMate;
-import org.activiti.engine.impl.bpmn.parser.factory.ParticipatorRuleParserFactory;
 import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.identity.Authentication;
-import org.activiti.engine.impl.persistence.entity.ByteArrayEntity;
-import org.activiti.engine.impl.persistence.entity.CommentEntity;
-import org.activiti.engine.impl.persistence.entity.ConsignInstEntity;
-import org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
-import org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
-import org.activiti.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
+import org.activiti.engine.impl.persistence.entity.ActivityEntity;
+import org.activiti.engine.impl.persistence.entity.BizProcDefExtendEntityManager;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.persistence.entity.ReverseRunTrailEntity;
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
-import org.activiti.engine.impl.rollback.BatchCachedUtil;
 import org.activiti.engine.impl.rollback.BatchContext;
-import org.activiti.engine.impl.runtime.Action;
-import org.activiti.engine.impl.runtime.OperationType;
-import org.activiti.engine.impl.task.TaskDefinition;
-import org.activiti.engine.impl.task.TaskQueryAttribute;
-import org.activiti.engine.impl.util.json.JSONTokener;
 import org.activiti.engine.impl.variable.ActVariable;
-import org.activiti.engine.parse.ParticipatorRuleParser;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.repository.Category;
 import org.activiti.engine.spi.identity.IdentityEnum;
 import org.activiti.engine.spi.identity.Participator;
 import org.activiti.engine.spi.task.custom.WhereCondition;
-import org.activiti.engine.task.Comment;
-import org.activiti.engine.task.ConsignInst;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskExtQuery;
-import org.activiti.engine.task.TaskQuery;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bosssoft.platform.common.classloader.RuntimeClassLoaderHelper;
-import com.bosssoft.platform.common.extension.ExtensionLoader;
-
-import groovy.util.OrderBy;
 
 
 public class TaskOpTest extends BaseTest{
@@ -84,6 +40,8 @@ public class TaskOpTest extends BaseTest{
 	// 待办任务查询
 	@Test
 	public void unfinishTaskSearch() {
+		
+		runtimeService.endManualProcess(processInstanceId);
 		String userId="u01";
 		String userRole="r01";
 		List<TaskExt> list=new ArrayList<TaskExt>();
@@ -95,7 +53,7 @@ public class TaskOpTest extends BaseTest{
 		long num = taskExtQuery
 				//.businessKey(userId)
 			//	.ownerTaskAssigneeOrCandidate(userId)
-				.taskAssigneeOrCandidate(userId)
+				.taskAssigneeOrCandidate("USER0")
 				//.taskCreatedBefore(getDate("2018-12-28 15:30:37.971"))
 				//.taskCreatedAfter(getDate("2018-12-27 01:20:37.971"))
 				.count();
@@ -107,8 +65,11 @@ public class TaskOpTest extends BaseTest{
 					+ taskExt.getConsigState()+" 时间："+taskExt.getTaskCreateTime()+"  结束时间："+taskExt.getTaskEndTime()+"  中断状态："+taskExt.getSuspensionState());
 		}
 		
+	
+		//runtimeService.removeVariable(executionId, variableName);
+	   runtimeService.terminateProcess("");
 		
-		
+	   repositoryService.importBulkProcess(categoryId, processResourceList, isReplace);
 	}
 	
 	//委托任务查询
@@ -201,7 +162,7 @@ public class TaskOpTest extends BaseTest{
 		//map.put("muti_var", null);
 		//taskService.complete("1065035");
 		long t1 = System.currentTimeMillis();
-		taskService.complete("1027504",map);
+		taskService.complete("250153",map);
 		//taskService.complete("1022522",map);
 		
 		long t2 = System.currentTimeMillis();
@@ -215,7 +176,12 @@ public class TaskOpTest extends BaseTest{
 	public void redo(){
 		//runtimeService.suspendProcessInstanceById("1405013");
 		//runtimeService.activateProcessInstanceById("1405013");
-	   runtimeService.terminateProcess("1072504");
+	   //runtimeService.terminateProcess("1072504");
+
+		List<Category> list=repositoryService.createCategoryQuery().list();
+		for (Category category : list) {
+			System.out.println(category.getId()+" "+category.getCategoryName());
+		}
 	}
 	
 	@Test
@@ -398,6 +364,8 @@ public class TaskOpTest extends BaseTest{
 		/*runtimeService.setVariable("902508", "var1", "var1");
 		runtimeService.setVariable("902517", "var2", "var2");
 		runtimeService.setVariable("902526", "var3", "var3");*/
+		bizExtendService.createBizProcExtendQuery()
+		
 		long t1 = System.currentTimeMillis();
 		taskService.complete("1020010");
 		long t2 = System.currentTimeMillis();
@@ -494,7 +462,7 @@ public class TaskOpTest extends BaseTest{
 		list.add("02");
 		String objstr=JSON.toJSONString(list);
 		System.out.println(objstr.getBytes());
-		taskService.withdrawByStarter(processInstId);
+		//taskService.withdrawByStarter(processInstId);
 		
 		List<String> result=JSONObject.parseArray(objstr,  String.class);
 		System.out.println(result);
@@ -538,27 +506,17 @@ public class TaskOpTest extends BaseTest{
       
 	}
 	
+	//=====getVriableTest
 	@Test
-	public void testProcessdef(){
-		//repositoryService.createModelQuery().modelKey("Process_1").list();
-		
-		histroyService
-		.createHistoricTaskInstanceQuery()
-		.processInstanceId("")
-		.taskDefinitionKey("")
-		.unfinished()
-		.orderByHistoricTaskInstanceEndTime()
-		.processDefinitionName("")
-		.desc()
-		.count();
-		
-		
-		histroyService
-
+	public void getTaskVaribale(){
+		runtimeService.createProcessInstanceQuery().active().list();
 	}
 	
+	@Test
+	public void getProcessVariable(){
 	
-	
+		histroyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(processInstanceBusinessKey)
+	}
 
 	
 }

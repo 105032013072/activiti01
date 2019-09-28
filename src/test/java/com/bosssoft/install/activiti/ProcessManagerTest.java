@@ -35,6 +35,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.util.DateConventUtil;
 import org.activiti.engine.impl.variable.ActVariable;
 import org.activiti.engine.repository.BizComment;
+import org.activiti.engine.repository.BizProcDefExtend;
 import org.activiti.engine.repository.BusinessComment;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
@@ -113,6 +114,7 @@ public class ProcessManagerTest extends BaseTest {
 		inputStream.read(bytes);
 		String str = new String(bytes);
 		repositoryService.saveModelAndUpdateProcessDefinition("10060", str);
+		
 	}
 	
 	
@@ -142,15 +144,19 @@ public class ProcessManagerTest extends BaseTest {
 	}*/
 	
 	@Test
-	public void deleteDeployment() {
-		List<Deployment> list = processEngine.getRepositoryService().createDeploymentQuery()
+	public void deleteDeployment() throws Exception {
+		/*List<Deployment> list = processEngine.getRepositoryService().createDeploymentQuery()
 				.list();
 		for (Deployment deployment : list) {
 			System.out.println(deployment.getId());
 
 			processEngine.getRepositoryService().deleteDeploymentCascade(deployment.getId());
 			//repositoryService.deleteDeployment(deployment.getId(), false);
-		}
+		}*/
+		
+	
+		
+		repositoryService.saveModelAndUpdateProcessDefinition("427511", getString("com/contract/process-test.bpmnx"), "1");
 	}
 	
 	@Test
@@ -312,17 +318,15 @@ public class ProcessManagerTest extends BaseTest {
 	}
 	
 	@Test
-	public void getBusinessComment(){
-		List<BizComment> list=	histroyService.getBizCommentsAfterTask("45007", "Process_3:1:30011", ActivityImplConstants.ACTIVITYIMPL_TYPE_USERTASK);
-		for (BizComment businessComment : list) {
-			StringBuffer buffer=new StringBuffer();
-			//setStr(buffer, "BusinessFlag", businessComment.getBusinessFlag());
-			//setStr(buffer, "BusinessInstId", businessComment.getBusinessInstId());
-			setStr(buffer, "ProcDefId", businessComment.getProcDefId());
-			setStr(buffer, "ActId", businessComment.getActId());
-			setStr(buffer, "ActName", businessComment.getActName());
-			setStr(buffer, "CompleteTime", businessComment.getCompleteTime());
-			System.out.println(buffer.toString());
+	public void getBizprocExtend(){
+		List<BizProcDefExtend> list=	bizExtendService
+		.createBizProcExtendQuery()
+		.actIdIsNotNull()
+		.processDefinitionId("Process_like:1:427515")
+		.list();
+		
+		for (BizProcDefExtend bizProcDefExtend : list) {
+			System.out.println(bizProcDefExtend.getType()+"  "+bizProcDefExtend.getExt1());
 		}
 	}
 	

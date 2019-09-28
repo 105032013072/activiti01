@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.activiti.engine.BizExtendService;
 import org.activiti.engine.BpmnxTool;
 import org.activiti.engine.DynamicBpmnService;
 import org.activiti.engine.FormService;
@@ -48,7 +49,7 @@ public class BaseTest {
 	public FormService formService=processEngine.getFormService();
 	public BpmnxTool bpmnxTool=processEngine.getBpmnxTool();
     public DynamicBpmnService dynamicBpmnService=processEngine.getDynamicBpmnService();
-	
+	public BizExtendService bizExtendService=processEngine.getBizExtendService();
 	
 	@Test
 	public void getActivity() {

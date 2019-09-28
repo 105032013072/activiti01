@@ -2,9 +2,9 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://bpmn.io/schema/bpmn">
   <process id="Process_2" name="测试流程" isExecutable="true" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" bpmnx:globalNotification="true" bpmnx:version="1">
     <extensionElements>
-      <bpmnx:formDefinition></bpmnx:formDefinition>
-      <bpmnx:timeEffectiveDefinition></bpmnx:timeEffectiveDefinition>
-      <bpmnx:starterDefinition>
+      <bpmnx:formDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx"></bpmnx:formDefinition>
+      <bpmnx:timeEffectiveDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx"></bpmnx:timeEffectiveDefinition>
+      <bpmnx:starterDefinition xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx">
         <bpmnx:participators></bpmnx:participators>
       </bpmnx:starterDefinition>
     </extensionElements>
@@ -97,7 +97,7 @@
         <omgdc:Bounds height="36.0" width="36.0" x="709.0" y="102.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
-        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="80.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="93.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1bmv4fv" id="BPMNEdge_SequenceFlow_1bmv4fv">
         <omgdi:waypoint x="209.0" y="120.0"></omgdi:waypoint>
@@ -109,10 +109,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="359.0" y="120.0"></omgdi:waypoint>
-        <omgdi:waypoint x="410.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="120.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="515.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="515.0" y="120.0"></omgdi:waypoint>
         <omgdi:waypoint x="559.0" y="120.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

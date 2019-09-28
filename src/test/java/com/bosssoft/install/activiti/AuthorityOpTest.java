@@ -19,8 +19,10 @@ import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.activiti.engine.impl.persistence.entity.CarbonCopyEntity;
 import org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.NotificationEntity;
+import org.activiti.engine.impl.persistence.entity.ReverseRunTrailEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.task.TaskDefinition;
+import org.activiti.engine.impl.variable.ActVariable;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.spi.identity.IdentityEnum;
@@ -60,15 +62,18 @@ public class AuthorityOpTest extends BaseTest{
 			}
 		});*/
 
-		taskService.backToLast("955004", false);
+		taskService.backToLast("1915007", true);
+		//taskService.backToActivity("288433", "A", true);
 		
 		
 	}
 	
 	@Test
 	public void returnToActivity(){
-		taskService.backToActivity("1210155", "A", false);
-		taskService.cancelBack("482567");
+		//taskService.backToActivity("87570", "A", false);
+		taskService.cancelBack("310109");
+		
+		
 	}
 	
 	@Test
@@ -77,6 +82,9 @@ public class AuthorityOpTest extends BaseTest{
 		params.put("num", 60);*/
 		
 		taskService.backToReapply("1040036");
+		
+	     runtimeService.getProcessRunTrail(processInstanceId)
+	     runtimeService.createReverseRunTrailQuery()
 		
 		//taskService.backToReapply("1002562");
 	//	taskService.createTaskSubstitutionInst(consignor, consignee, consigneeType, taskId, consignSourceId);
@@ -93,7 +101,7 @@ public class AuthorityOpTest extends BaseTest{
 		
 		taskService.insertParallel("452507", "u05");
 	 
-	 
+	    repositoryService.saveModelAndUpdateProcessDefinition(modelId, processDefinitionStr, categoryId);
 	  
 	}
 	
@@ -102,7 +110,7 @@ public class AuthorityOpTest extends BaseTest{
 	@Test
 	public void callBack(){
 		
-	taskService.withdrawByAssignee("977579", "u01", true);
+	taskService.withdrawByAssignee("287549", "u01", true);
 		
 		//taskService.unclaimCascade("435002", null);
 		//taskService.withdrawByStarter("147501");
@@ -238,8 +246,7 @@ public class AuthorityOpTest extends BaseTest{
  	
  	@Test
  	public void complet(){
- 		taskService.complete("532507");
- 		
+ 		taskService.complete("1907508");
  		
  	}
  	
@@ -248,17 +255,17 @@ public class AuthorityOpTest extends BaseTest{
  		//taskService.setVariable("1065013", "ALL", "全局");
  		System.out.println(taskService.getVariableLocal("1065013", "ALL"));
  		//runtimeService.getVariable("1065008", "num");
+ 		
+ 		taskService.addCandidateGroup(taskId, groupId, groupType);
+ 		
  	}
  	
  	@Test
  	public void jobTest() throws InterruptedException{
- 	    String[] hisTaskArray={"295010","295014"};
- 	    for (String string : hisTaskArray) {
-			taskService.withdrawByAssignee(string, "u01", true);
+ 		List<ReverseRunTrailEntity> list=  runtimeService.createReverseRunTrailQuery().operationId("57d93c48530a4b77ad32a466f778b8ef").list();
+        for (ReverseRunTrailEntity reverseRunTrailEntity : list) {
+			System.out.println(reverseRunTrailEntity.getTaskId());
 		}
- 	    
- 	    
- 	    taskService.createTaskQuery()
  	}
  	
  	

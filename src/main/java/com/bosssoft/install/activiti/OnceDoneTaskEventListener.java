@@ -7,6 +7,7 @@ import java.util.Set;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
@@ -15,7 +16,9 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.cmd.AbstractCustomSqlExecution;
+import org.activiti.engine.impl.persistence.entity.CancelBackEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.persistence.entity.ReverseRunTrailEntity;
 import org.activiti.engine.impl.persistence.entity.TaskBackEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.persistence.entity.WithdrawEntity;
@@ -34,12 +37,14 @@ public class OnceDoneTaskEventListener implements ActivitiEventListener {
     private RepositoryService repositoryService;
     private HistoryService historyService;
     private ManagementService managementService;
+    private RuntimeService runtimeService;
 	
 	public void onEvent(ActivitiEvent event) {
 		repositoryService = event.getEngineServices().getRepositoryService();
         historyService = event.getEngineServices().getHistoryService();
         managementService = event.getEngineServices().getManagementService();
-
+        runtimeService=event.getEngineServices().getRuntimeService();
+        
         ActivitiEventType eventType = event.getType();
         ActivitiEntityEvent entityEvent = (ActivitiEntityEvent) event;
         Object entity = entityEvent.getEntity();
@@ -48,6 +53,10 @@ public class OnceDoneTaskEventListener implements ActivitiEventListener {
             case TASK_COMPLETED:
                 if (entity instanceof TaskEntity) {
                     TaskEntity task = (TaskEntity) entity;
+                   
+                    HistoricTaskInstance test = historyService.createHistoricTaskInstanceQuery().taskId(task.getId()).singleResult();
+                    test.setOperationFlag("just test");
+                   
                     ProcessDefinitionEntity processDef = (ProcessDefinitionEntity) ((RepositoryServiceImpl)
                             repositoryService).getDeployedProcessDefinition(task.getProcessDefinitionId());
                     ActivityImpl startActivityImpl = processDef.findActivity(task.getTaskDefinitionKey());
@@ -72,6 +81,14 @@ public class OnceDoneTaskEventListener implements ActivitiEventListener {
             case TASK_BACKED:
                 if (entity instanceof TaskBackEntity) {
                     TaskBackEntity task = (TaskBackEntity) entity;
+                    System.out.println("=====opId: "+task.getRetralOperationId());
+                    
+                    /*List<ReverseRunTrailEntity> list=  runtimeService.createReverseRunTrailQuery().operationId(task.getRetralOperationId()).list();
+                    for (ReverseRunTrailEntity reverseRunTrailEntity : list) {
+						System.out.println(reverseRunTrailEntity.getTaskId());
+					}*/
+                    
+                   
                     List<Task> backTargets = task.getBackTargets();
                     for (Task targetTask : backTargets) {
                         ProcessDefinitionEntity processDef = (ProcessDefinitionEntity) ((RepositoryServiceImpl)
@@ -94,7 +111,12 @@ public class OnceDoneTaskEventListener implements ActivitiEventListener {
             case TASK_WITHDRAWED:
                 if (entity instanceof WithdrawEntity) {
                     WithdrawEntity task = (WithdrawEntity) entity;
+                    System.out.println("=====opId: "+task.getRetralOperationId());
+                    
                     HistoricTaskInstance taskInstance = task.getWithdrawTaskInstance();
+                    
+                    
+                    
                     ProcessDefinitionEntity processDef = (ProcessDefinitionEntity) ((RepositoryServiceImpl)
                             repositoryService).getDeployedProcessDefinition(taskInstance.getProcessDefinitionId());
                     ActivityImpl startActivityImpl = processDef.findActivity(taskInstance.getTaskDefinitionKey());
@@ -111,11 +133,27 @@ public class OnceDoneTaskEventListener implements ActivitiEventListener {
                         	historicTaskInstance=list.get(0);
                         }
                         if (historicTaskInstance != null) {
-                            updateHisTaskOfExt1(historicTaskInstance.getId(), null);
+                        	historicTaskInstance.setOperationFlag("just test");
+                            /*updateHisTaskOfExt1(historicTaskInstance.getId(), null);*/
                         }
                     }
                 }
                 break;
+                
+            case TASK_CANCELBACK:
+            	if (entity instanceof CancelBackEntity) {
+            		CancelBackEntity task = (CancelBackEntity) entity;
+            		for (HistoricTaskInstance sourcetask : task.getSourceTaskList()) {
+						System.out.println("source: "+sourcetask.getTaskDefinitionKey()+"   "+sourcetask.getId());
+					}
+            		
+            		for (Task sourcetask : task.getTargetTaskList()) {
+						System.out.println("target: "+sourcetask.getTaskDefinitionKey()+"   "+sourcetask.getId());
+					}
+                    
+                }
+                break;
+            	
         }
     }
 

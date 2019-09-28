@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" name="并行" isExecutable="true" bpmnx:globalNotification="true" bpmnx:version="1">
+    <bpmn:extensionElements>
+      <bpmnx:formDefinition formPage="" formType="" />
+      <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+      <bpmnx:starterDefinition type="arbitrary">
+        <bpmnx:participators />
+      </bpmnx:starterDefinition>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1" name="" activiti:formKey="undefined" activiti:initiator="undefined">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>SequenceFlow_1hvfv2z</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="A" name="A">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1hvfv2z</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1whpc7k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1hvfv2z" sourceRef="StartEvent_1" targetRef="A" />
+    <bpmn:sequenceFlow id="SequenceFlow_1whpc7k" sourceRef="A" targetRef="ExclusiveGateway_07x3kwk" />
+    <bpmn:parallelGateway id="ExclusiveGateway_07x3kwk" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_1whpc7k</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_167hp67</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0btqoqw</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="B" name="B">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_167hp67</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_02yi5c3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_167hp67" sourceRef="ExclusiveGateway_07x3kwk" targetRef="B" />
+    <bpmn:sequenceFlow id="SequenceFlow_02yi5c3" sourceRef="B" targetRef="ExclusiveGateway_11ssxhg" />
+    <bpmn:userTask id="C" name="C">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_09d2tr3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1lyowjx</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_09d2tr3" sourceRef="ExclusiveGateway_11ssxhg" targetRef="C" />
+    <bpmn:userTask id="D" name="D">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_03i9i6j</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1kj2tud</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_03i9i6j" sourceRef="ExclusiveGateway_11ssxhg" targetRef="D" />
+    <bpmn:sequenceFlow id="SequenceFlow_1lyowjx" sourceRef="C" targetRef="ExclusiveGateway_01b6nly" />
+    <bpmn:parallelGateway id="ExclusiveGateway_01b6nly" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_1lyowjx</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1kj2tud</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_17dynme</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1kj2tud" sourceRef="D" targetRef="ExclusiveGateway_01b6nly" />
+    <bpmn:userTask id="E" name="E">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_17dynme</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1j54n6t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_17dynme" sourceRef="ExclusiveGateway_01b6nly" targetRef="E" />
+    <bpmn:userTask id="F" name="F">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0btqoqw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0re6btf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0btqoqw" sourceRef="ExclusiveGateway_07x3kwk" targetRef="F" />
+    <bpmn:sequenceFlow id="SequenceFlow_0re6btf" sourceRef="F" targetRef="ExclusiveGateway_0q3jjnr" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0q3jjnr" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_0re6btf</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1j54n6t</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ljsa9l</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1j54n6t" sourceRef="E" targetRef="ExclusiveGateway_0q3jjnr" />
+    <bpmn:endEvent id="EndEvent_02quapm" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_1ytvwpf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="G" name="G">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0ljsa9l</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1ytvwpf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ljsa9l" sourceRef="ExclusiveGateway_0q3jjnr" targetRef="G" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ytvwpf" sourceRef="G" targetRef="EndEvent_02quapm" />
+    <bpmn:parallelGateway id="ExclusiveGateway_11ssxhg" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_02yi5c3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09d2tr3</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_03i9i6j</bpmn:outgoing>
+    </bpmn:parallelGateway>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1w0gnfu_di" bpmnElement="A">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1hvfv2z_di" bpmnElement="SequenceFlow_1hvfv2z">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1whpc7k_di" bpmnElement="SequenceFlow_1whpc7k">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_041ycls_di" bpmnElement="ExclusiveGateway_07x3kwk">
+        <dc:Bounds x="409" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0jo9jrk_di" bpmnElement="B">
+        <dc:Bounds x="459" y="-50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_167hp67_di" bpmnElement="SequenceFlow_167hp67">
+        <di:waypoint x="434" y="95" />
+        <di:waypoint x="434" y="-10" />
+        <di:waypoint x="459" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_02yi5c3_di" bpmnElement="SequenceFlow_02yi5c3">
+        <di:waypoint x="559" y="-10" />
+        <di:waypoint x="607" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0v6zhm1_di" bpmnElement="C">
+        <dc:Bounds x="725" y="-144" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_09d2tr3_di" bpmnElement="SequenceFlow_09d2tr3">
+        <di:waypoint x="632" y="-35" />
+        <di:waypoint x="632" y="-104" />
+        <di:waypoint x="725" y="-104" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_06r2sl4_di" bpmnElement="D">
+        <dc:Bounds x="713" y="-50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_03i9i6j_di" bpmnElement="SequenceFlow_03i9i6j">
+        <di:waypoint x="657" y="-10" />
+        <di:waypoint x="713" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1lyowjx_di" bpmnElement="SequenceFlow_1lyowjx">
+        <di:waypoint x="825" y="-104" />
+        <di:waypoint x="896" y="-104" />
+        <di:waypoint x="896" y="-35" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_0mif3zc_di" bpmnElement="ExclusiveGateway_01b6nly">
+        <dc:Bounds x="871" y="-35" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1kj2tud_di" bpmnElement="SequenceFlow_1kj2tud">
+        <di:waypoint x="813" y="-10" />
+        <di:waypoint x="871" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0i6nutx_di" bpmnElement="E">
+        <dc:Bounds x="967" y="-50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_17dynme_di" bpmnElement="SequenceFlow_17dynme">
+        <di:waypoint x="921" y="-10" />
+        <di:waypoint x="967" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0uczbrq_di" bpmnElement="F">
+        <dc:Bounds x="598" y="157" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0btqoqw_di" bpmnElement="SequenceFlow_0btqoqw">
+        <di:waypoint x="434" y="120" />
+        <di:waypoint x="434" y="197" />
+        <di:waypoint x="598" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0re6btf_di" bpmnElement="SequenceFlow_0re6btf">
+        <di:waypoint x="698" y="197" />
+        <di:waypoint x="1211" y="197" />
+        <di:waypoint x="1211" y="116" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_1r61n4q_di" bpmnElement="ExclusiveGateway_0q3jjnr">
+        <dc:Bounds x="1186" y="66" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1j54n6t_di" bpmnElement="SequenceFlow_1j54n6t">
+        <di:waypoint x="1067" y="-10" />
+        <di:waypoint x="1211" y="-10" />
+        <di:waypoint x="1211" y="66" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_02quapm_di" bpmnElement="EndEvent_02quapm">
+        <dc:Bounds x="1446" y="73" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_00pr9b3_di" bpmnElement="G">
+        <dc:Bounds x="1291" y="51" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ljsa9l_di" bpmnElement="SequenceFlow_0ljsa9l">
+        <di:waypoint x="1236" y="91" />
+        <di:waypoint x="1291" y="91" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ytvwpf_di" bpmnElement="SequenceFlow_1ytvwpf">
+        <di:waypoint x="1391" y="91" />
+        <di:waypoint x="1446" y="91" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_1kkthri_di" bpmnElement="ExclusiveGateway_11ssxhg">
+        <dc:Bounds x="607" y="-35" width="50" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

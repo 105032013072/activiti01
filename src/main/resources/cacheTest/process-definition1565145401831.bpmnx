@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmnx="http://www.bosssoft.com.cn/bpmnx" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_test" name="测试流程" isExecutable="true" bpmnx:globalNotification="true" bpmnx:version="1">
+    <bpmn:extensionElements>
+      <bpmnx:formDefinition formPage="" formType="">
+        <bpmnx:formProperty type="string" control="read-write" required="false" __rowId="bs_13" id="choose" name="选择" default="" writable="true" readable="true" />
+        <bpmnx:formProperty type="string" control="read-write" required="false" __rowId="bs_14" id="dest" name="目标节点" default="" writable="true" readable="true" />
+      </bpmnx:formDefinition>
+      <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000">
+        <bpmnx:remindProperty remindType="before" remindDifference="0.100">
+          <bpmnx:participators>
+            <bpmnx:participator type="USER" id="user0" name="搜索user0" />
+          </bpmnx:participators>
+        </bpmnx:remindProperty>
+      </bpmnx:timeEffectiveDefinition>
+      <bpmnx:channelDefinition>
+        <bpmnx:channelType value="email" />
+        <bpmnx:channelType value="sms" />
+        <bpmnx:channelType value="custom" />
+      </bpmnx:channelDefinition>
+      <bpmnx:notificationDefinition>
+        <bpmnx:notificationType value="TASKARRIVE" />
+        <bpmnx:notificationType value="REJECT" />
+        <bpmnx:notificationType value="PROCESSREVOKE" />
+      </bpmnx:notificationDefinition>
+      <bpmnx:starterDefinition type="arbitrary">
+        <bpmnx:participators />
+      </bpmnx:starterDefinition>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1" name="" activiti:formKey="undefined" activiti:initiator="undefined">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>SequenceFlow_1wjr2gw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_0ym7mzo" name="第一个节点" activiti:exclusive="false" bpmnx:isAutoComplete="true">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="DEFAULT" />
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1wjr2gw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15zb9an</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1wjr2gw" sourceRef="StartEvent_1" targetRef="UserTask_0ym7mzo" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0equrm3" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_15zb9an</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1o6s0lf</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0s7q185</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_15zb9an" sourceRef="UserTask_0ym7mzo" targetRef="ExclusiveGateway_0equrm3" />
+    <bpmn:userTask id="B" name="B" activiti:exclusive="false">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="DEFAULT">
+            <bpmnx:participators>
+              <bpmnx:participator type="USER" id="user0" name="参与者0" />
+            </bpmnx:participators>
+          </bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1o6s0lf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_07rvdpr</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1o6s0lf" name="" sourceRef="ExclusiveGateway_0equrm3" targetRef="B">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" bpmnx:expressionType="EL">${choose == "B"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="D" name="D" activiti:exclusive="false">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="DEFAULT" />
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0s7q185</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1uzaeob</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0s7q185" name="" sourceRef="ExclusiveGateway_0equrm3" targetRef="D">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" bpmnx:expressionType="EL">${choose in ["D"]}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="C" name="C" activiti:exclusive="false">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_STARTER">${process_starter}</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_07rvdpr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0hec3o8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_07rvdpr" sourceRef="B" targetRef="C" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0s3qelq" name="">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_0hec3o8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nksa7x</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vz3x44</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0hec3o8" sourceRef="C" targetRef="ExclusiveGateway_0s3qelq" />
+    <bpmn:userTask id="E" name="E" activiti:exclusive="false">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="ACT_PARTICIPATOR">B</bpmnx:assignee>
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1nksa7x</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0c5uu2k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1nksa7x" name="" sourceRef="ExclusiveGateway_0s3qelq" targetRef="E">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" bpmnx:expressionType="QL">目标节点 等于 "E"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="F" name="F" activiti:exclusive="false">
+      <bpmn:extensionElements>
+        <bpmnx:participatorDefinition participatorType="assignee">
+          <bpmnx:candidate participatorSource="DEFAULT" />
+          <bpmnx:assignee participatorSource="PROCESS_VAR" />
+        </bpmnx:participatorDefinition>
+        <bpmnx:timeEffectiveDefinition calendar="workingday" timeDuration="0.000" />
+        <bpmnx:formDefinition formPage="" formType="" />
+        <bpmnx:executionListeners>
+          <bpmnx:listener executionId="task-listener-1" order="0" text="ID:task-listener-1 (任务事件监听测试接口)" interface="com.bosssoft.demo.annoexe.TaskListenerService" type="RPC" description="任务事件监听测试接口">
+            <bpmnx:event hasExecutionContext="true" method="redo" description="监听重做事件" event="REDO" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="back" description="监听回退事件" event="BACK" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="start" description="监听开始事件" event="START" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="unclaim" description="监听任务拒绝领取事件" event="UNCLAIM" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="end" description="监听事结束件" event="END" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="withdraw" description="监听收回事件" event="WITHDRAW" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="assign" description="监听用户任务设置办理人事件" event="ASSIGN" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="confirm" description="监听确认事件" event="CONFIRM" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="activate" description="监听激活事件" event="ACTIVATE" order="0" />
+            <bpmnx:event hasExecutionContext="true" method="claim" description="监听任务领取事件" event="CLAIM" order="0" />
+          </bpmnx:listener>
+        </bpmnx:executionListeners>
+        <bpmnx:authorityDefinition>
+          <bpmnx:consignDefinition enable="true">
+            <bpmnx:consignType value="delegate" />
+            <bpmnx:consignType value="substitution" />
+            <bpmnx:consignType value="cooperation" />
+          </bpmnx:consignDefinition>
+          <bpmnx:withdrawDefinition enable="true">
+            <bpmnx:withdrawType value="anyTime" />
+          </bpmnx:withdrawDefinition>
+          <bpmnx:backDefinition enable="true">
+            <bpmnx:backType value="backToLast" />
+            <bpmnx:backType value="backToAct" />
+            <bpmnx:backType value="backToReapply" />
+          </bpmnx:backDefinition>
+          <bpmnx:insertDefinition enable="true">
+            <bpmnx:insertType value="insertBefore" />
+          </bpmnx:insertDefinition>
+        </bpmnx:authorityDefinition>
+        <bpmnx:backActivities />
+        <bpmnx:carbonCopy>
+          <bpmnx:participators />
+        </bpmnx:carbonCopy>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0vz3x44</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_005ptxg</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0vz3x44" name="" sourceRef="ExclusiveGateway_0s3qelq" targetRef="F">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" bpmnx:expressionType="QL">目标节点 包含 ["F"]</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_0x69w9y" name="" bpmnx:endMode="AUTO">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_0c5uu2k</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_005ptxg</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1uzaeob</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0c5uu2k" sourceRef="E" targetRef="EndEvent_0x69w9y" />
+    <bpmn:sequenceFlow id="SequenceFlow_005ptxg" sourceRef="F" targetRef="EndEvent_0x69w9y" />
+    <bpmn:sequenceFlow id="SequenceFlow_1uzaeob" sourceRef="D" targetRef="EndEvent_0x69w9y" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_test">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0ym7mzo_di" bpmnElement="UserTask_0ym7mzo">
+        <dc:Bounds x="259" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1wjr2gw_di" bpmnElement="SequenceFlow_1wjr2gw">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="259" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0equrm3_di" bpmnElement="ExclusiveGateway_0equrm3" isMarkerVisible="true">
+        <dc:Bounds x="409" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_15zb9an_di" bpmnElement="SequenceFlow_15zb9an">
+        <di:waypoint x="359" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1fek8wy_di" bpmnElement="B">
+        <dc:Bounds x="494" y="-42" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1o6s0lf_di" bpmnElement="SequenceFlow_1o6s0lf">
+        <di:waypoint x="434" y="95" />
+        <di:waypoint x="434" y="-2" />
+        <di:waypoint x="494" y="-2" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_097ki8f_di" bpmnElement="D">
+        <dc:Bounds x="617" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0s7q185_di" bpmnElement="SequenceFlow_0s7q185">
+        <di:waypoint x="434" y="145" />
+        <di:waypoint x="434" y="237" />
+        <di:waypoint x="617" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0d8dn0s_di" bpmnElement="C">
+        <dc:Bounds x="648" y="-42" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_07rvdpr_di" bpmnElement="SequenceFlow_07rvdpr">
+        <di:waypoint x="594" y="-2" />
+        <di:waypoint x="648" y="-2" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0s3qelq_di" bpmnElement="ExclusiveGateway_0s3qelq" isMarkerVisible="true">
+        <dc:Bounds x="802" y="-27" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0hec3o8_di" bpmnElement="SequenceFlow_0hec3o8">
+        <di:waypoint x="748" y="-2" />
+        <di:waypoint x="802" y="-2" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0bxn2ka_di" bpmnElement="E">
+        <dc:Bounds x="904" y="-129" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nksa7x_di" bpmnElement="SequenceFlow_1nksa7x">
+        <di:waypoint x="827" y="-27" />
+        <di:waypoint x="827" y="-89" />
+        <di:waypoint x="904" y="-89" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_08dz1hi_di" bpmnElement="F">
+        <dc:Bounds x="896" y="13" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vz3x44_di" bpmnElement="SequenceFlow_0vz3x44">
+        <di:waypoint x="827" y="23" />
+        <di:waypoint x="827" y="53" />
+        <di:waypoint x="896" y="53" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0x69w9y_di" bpmnElement="EndEvent_0x69w9y">
+        <dc:Bounds x="1156" y="5" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0c5uu2k_di" bpmnElement="SequenceFlow_0c5uu2k">
+        <di:waypoint x="1004" y="-89" />
+        <di:waypoint x="1080" y="-89" />
+        <di:waypoint x="1080" y="23" />
+        <di:waypoint x="1156" y="23" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_005ptxg_di" bpmnElement="SequenceFlow_005ptxg">
+        <di:waypoint x="996" y="53" />
+        <di:waypoint x="1076" y="53" />
+        <di:waypoint x="1076" y="23" />
+        <di:waypoint x="1156" y="23" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1uzaeob_di" bpmnElement="SequenceFlow_1uzaeob">
+        <di:waypoint x="717" y="237" />
+        <di:waypoint x="1174" y="237" />
+        <di:waypoint x="1174" y="41" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
